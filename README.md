@@ -76,3 +76,27 @@ Les options choisis pour la démo _(Router Page)_ :
 - Fonctionnement du routing
     - Le contenu du dossier « app » est exposé
     - Les composants sont accessible en fonction de leur nom, Via une convention de nommage.
+
+
+## Structure de la démo 
+Le site sera constitué des pages suivantes : 
+```
+ /              : Page d'accueil
+ /region        : Page sur les régions (Listing du fichier JSON)
+ /region/:id    : Page détail d'un region
+ /pokemon       : Page sur les pokemons (Quelque lien vers des pokemons)
+ /pokemon/:id   : Page détail d'un pokemon (Via la pokeapi)
+ /about         : Page d'info avec un formulaire
+```
+
+La structure de fichier du dossier "pages" sera donc : 
+```
+index.jsx           /
+region
+    index.jsx       /region
+    [id].jsx        /region/42
+pokemon
+    index.jsx       /pokemon
+    [id].jsx        /pokemon/42
+about.jsx           /about
+```
