@@ -24,9 +24,9 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/gif" href="/pokeball.gif" />
       </Head>
-      <main className={roboto.className}>
+      <div className={roboto.className}>
         <Component {...pageProps} />
-      </main>
+      </div>
     </>
   );
 };
