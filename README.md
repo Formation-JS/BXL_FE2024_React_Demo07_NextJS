@@ -100,3 +100,44 @@ pokemon
     [id].jsx        /pokemon/42
 about.jsx           /about
 ```
+
+## Fonctionnement du pré-rendu avec NextJS (Page)
+
+### Types de pré-rendu possible
+- **SSG** (Static Site Génération) :
+\
+Génération durant le build
+\
+Celle ci peut necessite des données externe (BD, API, ...)
+\
+_Exemple : Page About, Page d'un blog_
+
+- **ISR** (Incremental Static Regeneration) :
+\
+Même fonctionnement que SSG, mais peut régénérer les pages.
+\
+Régénération possible : via un timer ou à la demande.
+\
+_Exemple : Page détail d'élement (qui pourrait être regénéré)_
+
+
+- **SSR** (Server Side Rendering) :
+\
+Génération à la suite d'une requete. Sans sauvegarder le rendu.
+\
+_Exemple : Page de profil_
+
+### Fonctionnement du choix de type
+- Si le composant "page" est seul (sans méthode annexe) => **SSG**
+
+- Si la page a besoin de donnée (via : DB, API, Json) 
+    - Via la méthode "getStaticProps" => **SSG**/**ISR**
+    - Via les méthodes "getStaticProps" et "getStaticPaths" => **SSG**/**ISR**
+    - Via la méthode "getServerSideProps" => **SSR**
+
+Pour définir que la page est en ISR (en non SSG), il faut ajouter la propriété "revalidate" à "getStaticProps".
+\
+Peu importe le type de pré-rendu choisi, il est toujours possible d'ajouter du code "client" dans les pages.
+Ce qui permet de la rendre dynamique pour l'utilisateur.
+\
+_Remarque : durant le dev, toutes les pages sont en SSR !!!_
