@@ -1,5 +1,5 @@
 import Layout from "@/container/Layout/Layout";
-import { getRegionById } from "@/services/region.service";
+import { getRegionAll, getRegionById } from "@/services/region.service";
 
 // ↓ Composant "page" pré-rendu par le serveur
 const RegionDetail = ({ region }) => {
@@ -17,18 +17,30 @@ const RegionDetail = ({ region }) => {
 export const getStaticPaths = async () => {
 
     //! Définir les différentes valeurs de route qui seront recu
-    const pathsDemo =  [
-        { params: { id: '1' }},   //* /region/1
-        { params: { id: '2' }},   //* /region/2
-        { params: { id: '3' }},   //* /region/3
-    ]
+    //? Exemple "hard-codé" → Pas génial =/
+    const pathsDemo = [
+        { params: { id: '1' } },   //* /region/1
+        { params: { id: '2' } },   //* /region/2
+        { params: { id: '3' } },   //* /region/3
+    ];
+
+    //? Exploiter les données (via le service) pour construire l'objet "paths"
+    //* Récuperation de données via le service 
+    const regions = await getRegionAll();
+
+    //* Construit l'objet "paths" via la fonction map et les données reçus
+    const pathsRegion = regions.map(region => {
+        return {
+            params: { id: region.id.toString() }
+        };
+    });
 
     //! Envoi un objet JS qui indique les routes possibles et les options
     return {
-        paths: pathsDemo,   // Les routes possibles
+        paths: pathsRegion, // Les routes possibles
         fallback: false     // Est ce qu'il doit générer les pages à la volé (→ non)
-    }
-}
+    };
+};
 
 // ↓ Méthode serveur qui permet d'injecter des données dans le composant "page"
 export const getStaticProps = async ({ params }) => {
@@ -42,7 +54,7 @@ export const getStaticProps = async ({ params }) => {
 
     //! Envoi un objet JS avec les données necessaire à la page (props)
     return {
-        props : {
+        props: {
             region: regionData
         }
     };
